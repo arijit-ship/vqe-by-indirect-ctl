@@ -21,7 +21,6 @@ Coefficients: TypeAlias = Union[
 
 
 class HamiltonianProtocol(Protocol):
-
     @abstractproperty
     def type(self) -> HamiltonianModel:
         ...

@@ -10,7 +10,10 @@ from .hamiltonian import Coefficients, HamiltonianModel, HamiltonianProtocol
 
 class XYHamiltonian(HamiltonianProtocol):
     def __init__(
-        self, n_qubits: int, coef: Coefficients, gamma: float = 0,
+        self,
+        n_qubits: int,
+        coef: Coefficients,
+        gamma: float = 0,
     ) -> None:
         self.n_qubits = n_qubits
         self.coef = coef
@@ -27,7 +30,7 @@ class XYHamiltonian(HamiltonianProtocol):
     @cached_property
     def eigh(self) -> Tuple:
         return np.linalg.eigh(self.value)
-    
+
     def create_hamiltonian(self) -> np.ndarray:
         XX = np.array(np.zeros(2**self.n_qubits))
         YY = np.array(np.zeros(2**self.n_qubits))

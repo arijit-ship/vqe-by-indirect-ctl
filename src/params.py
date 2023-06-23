@@ -6,7 +6,9 @@ def _generate_random_time_params(min_time, max_time, num) -> np.ndarray:
     return np.random.uniform(min_time, max_time, num)
 
 
-def _generate_random_bn_params(min_bn: float = -1.0, max_bn: float = 1.0, num: int = None) -> np.ndarray:
+def _generate_random_bn_params(
+    min_bn: float = -1.0, max_bn: float = 1.0, num: int = None
+) -> np.ndarray:
     return np.random.uniform(min_bn, max_bn, num)
 
 
@@ -15,8 +17,8 @@ def _generate_random_theta_params(num: int) -> np.ndarray:
 
 
 def create_init_params(config):
-    """
-    Create params for a parametric ciruit.
+    """Create params for a parametric ciruit.
+
     Parameters are time, cn, r(gamma), bn
     time: 0 - max_time
     cn: 0 - 1
@@ -42,11 +44,14 @@ def create_init_params(config):
     ## append bn params if bn type is random
     if config["gate"]["bn"]["type"] == "random":
         init_params = np.append(
-            init_params, _generate_random_bn_params(-1.0, 1.0, config["depth"] * n_qubits)
+            init_params,
+            _generate_random_bn_params(-1.0, 1.0, config["depth"] * n_qubits),
         )
 
     ## append theta params
-    init_theta_params, = _generate_random_theta_params(config["gate"]["parametric_rotation_gate_set"] * config["depth"])
+    (init_theta_params,) = _generate_random_theta_params(
+        config["gate"]["parametric_rotation_gate_set"] * config["depth"]
+    )
     init_params = np.append(init_params, init_theta_params)
 
     ## set bounds
@@ -57,20 +62,24 @@ def create_init_params(config):
 
 
 def create_bounds(n_qubits, config):
-    t_min = np.array([config["gate"]["time"]["min_val"]] * (config["depth"]+1))
-    t_max = np.array([config["gate"]["time"]["max_val"]] * (config["depth"]+1))
+    t_min = np.array(
+        [config["gate"]["time"]["min_val"]] * (config["depth"] + 1)
+    )
+    t_max = np.array(
+        [config["gate"]["time"]["max_val"]] * (config["depth"] + 1)
+    )
     bn_min = np.array([0.0] * config["depth"] * n_qubits)
     bn_max = np.array([1.0] * config["depth"] * n_qubits)
     theta_min = np.array(
-        [-np.Inf] * (config["gate"]["parametric_rotation_gate_set"] * config["depth"])
+        [-np.Inf]
+        * (config["gate"]["parametric_rotation_gate_set"] * config["depth"])
     )
     theta_max = np.array(
-        [np.Inf] * (config["gate"]["parametric_rotation_gate_set"] * config["depth"])
+        [np.Inf]
+        * (config["gate"]["parametric_rotation_gate_set"] * config["depth"])
     )
 
-    if (
-        config["gate"]["bn"]["type"] == "random"
-    ):
+    if config["gate"]["bn"]["type"] == "random":
         min_bounds = np.append(
             np.append(np.append(np.array([]), t_min), bn_min), theta_min
         )

@@ -19,6 +19,7 @@ black = "^23.3.0"
 flake8 = "^6.0.0"
 mypy = "^1.4.0"
 pytest = "^7.3.2"
+docformatter = "^1.7.3"
 
 [tool.poetry.group.extras.dependencies]
 google-cloud-bigquery = "^3.11.2"
@@ -26,3 +27,9 @@ google-cloud-bigquery = "^3.11.2"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 78
+
+[tool.isort]
+profile = "black"

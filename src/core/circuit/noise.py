@@ -3,8 +3,8 @@ from typing import TypeAlias
 
 NoiseValue: TypeAlias = float
 
+
 @dataclass
-class Noise():
+class Noise:
     single: NoiseValue
     two: NoiseValue
- 

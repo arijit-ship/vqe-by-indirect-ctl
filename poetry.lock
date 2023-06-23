@@ -315,6 +315,25 @@ files = [
 packaging = "*"
 
 [[package]]
+name = "docformatter"
+version = "1.7.3"
+description = "Formats docstrings to follow PEP 257"
+category = "dev"
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "docformatter-1.7.3-py3-none-any.whl", hash = "sha256:ba776f6305ff0ae9e1f42178975c0956ce01216e80b9d3e3e43daae9f742e321"},
+    {file = "docformatter-1.7.3.tar.gz", hash = "sha256:f6ce59631d4ecc41af2780787b88f5dab94cdf1383796b1110318040c2f4ea36"},
+]
+
+[package.dependencies]
+charset_normalizer = ">=3.0.0,<4.0.0"
+untokenize = ">=0.1.1,<0.2.0"
+
+[package.extras]
+tomli = ["tomli (>=2.0.0,<3.0.0)"]
+
+[[package]]
 name = "duet"
 version = "0.2.8"
 description = "A simple future-based async library for python."
@@ -1696,6 +1715,17 @@ files = [
 ]
 
 [[package]]
+name = "untokenize"
+version = "0.1.1"
+description = "Transforms tokens into original source code (while preserving whitespace)."
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "untokenize-0.1.1.tar.gz", hash = "sha256:3865dbbbb8efb4bb5eaa72f1be7f3e0be00ea8b7f125c69cbd1f5fda926f37a2"},
+]
+
+[[package]]
 name = "urllib3"
 version = "2.0.3"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -1716,4 +1746,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "22d7997b84d6e7fe5e8b38a8c7c6e00552865fc60a4745217d5f6bc58c49fde0"
+content-hash = "fe8a11f7ba1b7d76e8ad02cb940bccef2fe13f31bf7471aedafd9beafd7c1b73"

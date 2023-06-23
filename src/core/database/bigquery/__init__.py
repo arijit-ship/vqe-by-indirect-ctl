@@ -3,8 +3,11 @@ from typing import Any
 
 from google.cloud import bigquery
 
-from .job_result import (create_job_result_table, find_job_result,
-                         insert_job_result)
+from .job_result import (
+    create_job_result_table,
+    find_job_result,
+    insert_job_result,
+)
 
 __all__ = [
     "create_job_result_table",
@@ -24,8 +27,12 @@ class BigQueryClient:
     ) -> bigquery.Table.table_id:
         return bigquery.Table.from_string(f"{project_id}.{dataset}.{table}")
 
-    def create_table(self, dataset: str, table: str, schema: str) -> bigquery.Table:
-        table_id = bigquery.Table.from_string(f"{self.project_id}.{dataset}.{table}")
+    def create_table(
+        self, dataset: str, table: str, schema: str
+    ) -> bigquery.Table:
+        table_id = bigquery.Table.from_string(
+            f"{self.project_id}.{dataset}.{table}"
+        )
         table = bigquery.Table(table_id, schema=schema)
         return self.client.create_table(table)
 

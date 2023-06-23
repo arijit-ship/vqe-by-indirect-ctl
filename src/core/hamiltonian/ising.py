@@ -9,9 +9,7 @@ from . import Coefficients, HamiltonianModel, HamiltonianProtocol
 
 
 class IsingHamiltonian(HamiltonianProtocol):
-    def __init__(
-        self, n_qubits: int, coef: Coefficients
-    ) -> None:
+    def __init__(self, n_qubits: int, coef: Coefficients) -> None:
         self.n_qubits = n_qubits
         self.coef = coef
 
@@ -26,7 +24,7 @@ class IsingHamiltonian(HamiltonianProtocol):
     @cached_property
     def eigh(self) -> Tuple:
         return np.linalg.eigh(self.value)
-    
+
     def create_hamiltonian(self, coef: Coefficients) -> np.ndarray:
         XX = np.array(np.zeros(2**self.n_qubits))
         Y = np.array(np.zeros(2**self.n_qubits))
