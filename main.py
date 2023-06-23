@@ -29,11 +29,11 @@ def init_ansatz(n_qubits: int, depth: int, gate_type: str, noise: dict):
         ansatz = XYAnsatz(n_qubits, depth, noise, hamiltonian)
     return ansatz
 
-def cost(nqubit, ansatz, observable, params):
+def cost(n_qubits, ansatz, observable, params):
     global iteration
     iteration += 1
-    state = QuantumState(nqubit)
-    circuit = QuantumCircuit(nqubit)
+    state = QuantumState(n_qubits)
+    circuit = QuantumCircuit(n_qubits)
     circuit = ansatz.create_ansatz(params)
     circuit.update_quantum_state(state)
     return observable.get_expectation_value(state)
@@ -59,7 +59,7 @@ def run(config):
     start_time = time.perf_counter()
     now = datetime.datetime.now()
 
-    n_qubits = config["nqubit"]
+    n_qubits = config["n_qubits"]
     ## init qulacs hamiltonian
     observable = create_ising_hamiltonian(n_qubits)
 
