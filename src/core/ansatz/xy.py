@@ -1,6 +1,5 @@
 from qulacs import (
     QuantumCircuit,
-    DenseMatrix,
     CNOT,
     DepolarizingNoise,
     TwoQubitDepolarizingNoise,

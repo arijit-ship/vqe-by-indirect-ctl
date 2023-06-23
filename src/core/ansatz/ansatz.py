@@ -1,5 +1,5 @@
 from abc import abstractproperty, abstractmethod
-from typing import Protocol, Iterable
+from typing import Protocol
 from enum import Enum
 import numpy as np
 from qulacs import QuantumCircuit
