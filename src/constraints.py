@@ -13,7 +13,8 @@ def create_time_constraints(time_params_length, all_params_length):
         [ 0.  1. -1.  0.  0.  0.  0.  0.]
         [ 0.  0.  1. -1.  0.  0.  0.  0.]
         [ 0.  0.  0.  1.  0.  0.  0.  0.]]
-    time_params_length equals `depth + 1` because we need to set before and after times for each time evolution.
+    time_params_length equals `depth + 1`
+    because we need to set before and after times for each time evolution.
     """
     matrix = np.array([])
     for i in range(time_params_length):
@@ -28,9 +29,7 @@ def create_time_constraints(time_params_length, all_params_length):
     matrix = np.hstack(
         (
             matrix.reshape(time_params_length, time_params_length),
-            np.zeros(
-                (time_params_length, all_params_length - time_params_length)
-            ),
+            np.zeros((time_params_length, all_params_length - time_params_length)),
         )
     )
     return LinearConstraint(matrix, 0, np.inf)

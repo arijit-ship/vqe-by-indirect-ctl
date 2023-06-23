@@ -29,7 +29,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
-line-length = 78
+line-length = 88
 
 [tool.isort]
 profile = "black"

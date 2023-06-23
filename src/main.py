@@ -40,9 +40,7 @@ def record(x):
     iter_history.append(iteration)
 
 
-def record_database(
-    job: Job, is_bq_import: bool, gcp_project_id: str
-) -> None:
+def record_database(job: Job, is_bq_import: bool, gcp_project_id: str) -> None:
     client = DBClient("data/job_results.sqlite3")
     insert_job(client, job)
     if is_bq_import:

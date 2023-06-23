@@ -43,9 +43,7 @@ def create_job_result_table(client: BigQueryClient) -> None:
     ]
     table = client.create_table(DATASET, TABLE, schema)
     print(
-        "Created table {}.{}.{}".format(
-            table.project, table.dataset_id, table.table_id
-        )
+        "Created table {}.{}.{}".format(table.project, table.dataset_id, table.table_id)
     )
 
 
@@ -72,14 +70,10 @@ def find_job_result(
         filter: sql phrase to filter records. It excludes `filter`.
     """
     if filter is None:
-        jobs = client.client.query(
-            sql_for_find_job(client.project_id, DATASET)
-        )
+        jobs = client.client.query(sql_for_find_job(client.project_id, DATASET))
     else:
         jobs = client.client.query(
-            "{} WHERE {}".format(
-                sql_for_find_job(client.project_id, DATASET), filter
-            )
+            "{} WHERE {}".format(sql_for_find_job(client.project_id, DATASET), filter)
         )
 
     return _convert_queryjob_into_dict(jobs)

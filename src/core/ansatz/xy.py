@@ -56,9 +56,7 @@ class XYAnsatz(AnsatzWithTimeEvolutionGate):
         for d in range(self.depth):
             circuit.add_gate(CNOT(0, 1))
             if self.noise.two != 0:
-                circuit.add_gate(
-                    TwoQubitDepolarizingNoise(0, 1, self.noise.two)
-                )
+                circuit.add_gate(TwoQubitDepolarizingNoise(0, 1, self.noise.two))
 
             circuit = self._add_parametric_rotation_gate(
                 circuit,
@@ -72,15 +70,11 @@ class XYAnsatz(AnsatzWithTimeEvolutionGate):
                 ],
             )
 
-            circuit.add_gate(
-                self.create_time_evolution_gate(params[d], params[d + 1])
-            )
+            circuit.add_gate(self.create_time_evolution_gate(params[d], params[d + 1]))
 
         return circuit
 
-    def _add_parametric_rotation_gate(
-        self, circuit, params
-    ) -> QuantumCircuit:
+    def _add_parametric_rotation_gate(self, circuit, params) -> QuantumCircuit:
         circuit.add_gate(merge(RY(0, params[0]), RZ(0, params[1])))
         circuit.add_gate(merge(RY(1, params[2]), RZ(1, params[3])))
 
