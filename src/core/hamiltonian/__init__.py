@@ -1,17 +1,14 @@
-from ising import IsingHamiltonian
-from xy import XYHamiltonian
-
-from hamiltonian import (
+from core.hamiltonian.hamiltonian import (
     Coefficients,
     HamiltonianModel,
-    HamiltonianModelError,
     HamiltonianProtocol,
 )
+from core.hamiltonian.ising import IsingHamiltonian
+from core.hamiltonian.xy import XYHamiltonian
 
 __all__ = [
     "HamiltonianProtocol",
     "HamiltonianModel",
-    "HamiltonianModelError",
     "Coefficients",
     "IsingHamiltonian",
     "XYHamiltonian",

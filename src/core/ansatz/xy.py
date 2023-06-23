@@ -1,9 +1,9 @@
-from qulacs import (
+from qulacs import QuantumCircuit
+from qulacs.gate import (
     CNOT,
     RY,
     RZ,
     DepolarizingNoise,
-    QuantumCircuit,
     TwoQubitDepolarizingNoise,
     merge,
 )

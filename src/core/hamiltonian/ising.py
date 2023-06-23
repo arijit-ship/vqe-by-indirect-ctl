@@ -4,8 +4,11 @@ from typing import Tuple
 import numpy as np
 
 from core.circuit import PauliGate
-
-from . import Coefficients, HamiltonianModel, HamiltonianProtocol
+from core.hamiltonian.hamiltonian import (
+    Coefficients,
+    HamiltonianModel,
+    HamiltonianProtocol,
+)
 
 
 class IsingHamiltonian(HamiltonianProtocol):
