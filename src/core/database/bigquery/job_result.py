@@ -1,6 +1,6 @@
+import json
 from collections.abc import Sequence
 from typing import Any
-import json
 
 from common.database.bigquery import BigQueryClient
 from common.database.bigquery.sql.find_job import sql_for_find_job

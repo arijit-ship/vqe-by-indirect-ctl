@@ -1,5 +1,5 @@
-from typing import TypeAlias
 from dataclasses import dataclass
+from typing import TypeAlias
 
 NoiseValue: TypeAlias = float
 

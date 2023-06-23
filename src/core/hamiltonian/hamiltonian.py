@@ -1,8 +1,9 @@
 from abc import abstractproperty
-from typing import Iterable, Tuple, Union, Protocol
-from typing_extensions import TypeAlias
 from enum import Enum
+from typing import Iterable, Protocol, Tuple, Union
+
 import numpy as np
+from typing_extensions import TypeAlias
 
 
 class HamiltonianModel(Enum):

@@ -1,6 +1,6 @@
 import sqlite3
-from job import insert_job, create_job_table
 
+from job import create_job_table, insert_job
 
 __all__ = [
     "insert_job",

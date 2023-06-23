@@ -1,4 +1,4 @@
-from ansatz import AnsatzType, AnsatzProtocol, AnsatzWithTimeEvolutionGate
+from ansatz import AnsatzProtocol, AnsatzType, AnsatzWithTimeEvolutionGate
 from xy import XYAnsatz
 
 __all__ = [

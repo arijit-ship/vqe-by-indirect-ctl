@@ -1,8 +1,11 @@
 from functools import cached_property
 from typing import Tuple
+
 import numpy as np
+
 from core.circuit import PauliGate
-from .hamiltonian import HamiltonianModel, HamiltonianProtocol, Coefficients
+
+from .hamiltonian import Coefficients, HamiltonianModel, HamiltonianProtocol
 
 
 class XYHamiltonian(HamiltonianProtocol):
