@@ -31,31 +31,14 @@ def reset():
     iteration = 0
 
 
-def record(x):
-    global param_history
-    global cost_history
-    global iter_history
-    param_history.append(x)
-    cost_history.append(cost(x))
-    iter_history.append(iteration)
-
-
-def record_database(job: Job, is_bq_import: bool, gcp_project_id: str) -> None:
-    client = DBClient("data/job_results.sqlite3")
-    insert_job(client, job)
-    if is_bq_import:
-        bqClient = BigQueryClient(gcp_project_id)
-        insert_job_result(bqClient, job)
-
-
-def init_ansatz(n_qubits: int, depth: int, gate_type: str, noise: dict):
+def init_ansatz(n_qubits: int, depth: int, gate_type: str, gate_set: int, noise: dict):
     if gate_type == "direct":
         ...
         # ansatz = HardwareEfficientAnsatz(n_qubits, depth, noise)
     elif gate_type == "indirect_xy":
         coef = ([0.5] * n_qubits, [1.0] * n_qubits)
         hamiltonian = XYHamiltonian(n_qubits, coef, gamma=0)
-        ansatz = XYAnsatz(n_qubits, depth, noise, hamiltonian)
+        ansatz = XYAnsatz(n_qubits, depth, gate_set, noise, hamiltonian)
     return ansatz
 
 
@@ -67,6 +50,24 @@ def cost(n_qubits, ansatz, observable, params):
     circuit = ansatz.create_ansatz(params)
     circuit.update_quantum_state(state)
     return observable.get_expectation_value(state)
+
+
+def record(n_qubits, ansatz, observable, params):
+    global param_history
+    global cost_history
+    global iter_history
+    global iteration
+    param_history.append(params)
+    cost_history.append(cost(n_qubits, ansatz, observable, params))
+    iter_history.append(iteration)
+
+
+def record_database(job: Job, is_bq_import: bool, gcp_project_id: str) -> None:
+    client = DBClient("data/job_results.sqlite3")
+    insert_job(client, job)
+    if is_bq_import:
+        bqClient = BigQueryClient(gcp_project_id)
+        insert_job_result(bqClient, job)
 
 
 def run(config):
@@ -83,12 +84,16 @@ def run(config):
         n_qubits,
         config["depth"],
         config["gate"]["type"],
+        config["gate"]["parametric_rotation_gate_set"],
         config["gate"]["noise"],
     )
 
     # randomize and create constraints
-    init_params, _ = create_init_params(n_qubits, config)
-    record(init_params)
+    init_params, _ = create_init_params(config)
+    record(n_qubits, ansatz, observable, init_params)
+
+    def record_fn(params):
+        return record(n_qubits, ansatz, observable, params)
 
     def cost_fn(params):
         return cost(n_qubits, ansatz, observable, params)
@@ -100,7 +105,7 @@ def run(config):
         init_params,
         method=config["optimizer"]["method"],
         options=options,
-        callback=record,
+        callback=record_fn,
     )
 
     end_time = time.perf_counter()

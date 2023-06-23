@@ -1,5 +1,6 @@
 depth: 4
 n_qubits: 4
+iter: 1
 optimizer:
   method: "SLSQP"
 gate:

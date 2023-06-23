@@ -18,6 +18,7 @@ class XYAnsatz(AnsatzWithTimeEvolutionGate):
     n_qubits: int
     depth: int
     noise: Noise
+    _gate_set: int
     _parametric_circuit: QuantumCircuit
     _hamiltonian: XYHamiltonian
 
@@ -25,11 +26,13 @@ class XYAnsatz(AnsatzWithTimeEvolutionGate):
         self,
         n_qubits: int,
         depth: int,
+        gate_set: int,
         noise: dict,
         hamiltonian: XYHamiltonian,
     ) -> None:
         self.n_qubits = n_qubits
         self.depth = depth
+        self._gate_set = gate_set
         single, two = 0, 0
         if noise["singlequbit"]["enabled"]:
             single: NoiseValue = noise["singlequbit"]["value"]
@@ -63,9 +66,9 @@ class XYAnsatz(AnsatzWithTimeEvolutionGate):
                 params[
                     self.depth
                     + 1
-                    + (self.gate_set * d) : self.depth
+                    + (self._gate_set * d) : self.depth
                     + 1
-                    + (self.gate_set * d)
+                    + (self._gate_set * d)
                     + 4
                 ],
             )

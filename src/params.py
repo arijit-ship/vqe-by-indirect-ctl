@@ -53,7 +53,7 @@ def create_init_params(config):
         )
 
     # append theta params
-    (init_theta_params,) = _generate_random_theta_params(
+    init_theta_params = _generate_random_theta_params(
         config["gate"]["parametric_rotation_gate_set"] * config["depth"]
     )
     init_params = np.append(init_params, init_theta_params)

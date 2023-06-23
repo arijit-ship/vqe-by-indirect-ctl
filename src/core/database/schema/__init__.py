@@ -1,4 +1,4 @@
-from job import Job, JobFactory
+from .job import Job, JobFactory
 
 __all__ = [
     "Job",
