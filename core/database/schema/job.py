@@ -12,15 +12,7 @@ class Job:
     n_qubits: int
     depth: int
     gate_type: str
-    gate_set: str
-    bn_type: str
-    bn_range: int
     bn: str
-    cn: str
-    r: str
-    t_type: str
-    max_time: str
-    min_time: str
     t: str
     cost: str
     parameter: str
@@ -28,10 +20,6 @@ class Job:
     cost_history: str
     parameter_history: str
     iteration_history: str
-    noise_singlequbit_enabled: str
-    noise_singlequbit_value: str
-    noise_twoqubit_enabled: str
-    noise_twoqubit_value: str
     config: str
 
 
@@ -98,28 +86,12 @@ class JobFactory:
             self.config["gate"]["type"],
             None,
             None,
-            None,
-            None,
-            None,
-            None,
-            None,
-            None,
-            None,
-            None,
             str(cost_history[-1]),
             str(param_history[-1]),
             str(iter_history[-1]),
             str(cost_history),
             self._to_string(param_history),
             str(iter_history),
-            self.config["gate"]["noise"]["singlequbit"]["enabled"],
-            self.config["gate"]["noise"]["singlequbit"]["value"]
-            if "value" in self.config["gate"]["noise"]["singlequbit"]
-            else None,
-            self.config["gate"]["noise"]["twoqubit"]["enabled"],
-            self.config["gate"]["noise"]["twoqubit"]["value"]
-            if "value" in self.config["gate"]["noise"]["twoqubit"]
-            else None,
             json.dumps(self.config),
         )
 
@@ -139,21 +111,7 @@ class JobFactory:
             self.config["n_qubits"],
             self.config["depth"],
             self.config["gate"]["type"],
-            str(self.config["gate"]["parametric_rotation_gate_set"]),
-            str(self.config["gate"]["bn"]["type"]),
-            self.config["gate"]["bn"]["range"]
-            if "range" in self.config["gate"]["bn"]
-            else None,
             str(self.config["gate"]["bn"]["value"]),
-            str(self.config["gate"]["cn"]["value"]),
-            str(self.config["gate"]["r"]["value"]),
-            self.config["gate"]["time"]["type"],
-            self.config["gate"]["time"]["max_val"]
-            if "max_val" in self.config["gate"]["time"]
-            else None,
-            self.config["gate"]["time"]["min_val"]
-            if "min_val" in self.config["gate"]["time"]
-            else None,
             str(self.config["gate"]["time"]["value"])
             if "value" in self.config["gate"]["time"]
             else None,
@@ -163,13 +121,5 @@ class JobFactory:
             str(cost_history),
             self._to_string(param_history),
             str(iter_history),
-            self.config["gate"]["noise"]["singlequbit"]["enabled"],
-            self.config["gate"]["noise"]["singlequbit"]["value"]
-            if "value" in self.config["gate"]["noise"]["singlequbit"]
-            else None,
-            self.config["gate"]["noise"]["twoqubit"]["enabled"],
-            self.config["gate"]["noise"]["twoqubit"]["value"]
-            if "value" in self.config["gate"]["noise"]["twoqubit"]
-            else None,
             json.dumps(self.config),
         )

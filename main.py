@@ -2,7 +2,6 @@ import sys
 import yaml
 import time
 import datetime
-from typing import Tuple, Iterable
 from scipy.optimize import minimize
 from qulacs import QuantumState, QuantumCircuit
 from params import create_init_params
@@ -19,6 +18,31 @@ param_history = []
 cost_history = []
 iter_history = []
 
+def reset():
+    global param_history
+    global cost_history
+    global iter_history
+    global iteration
+    param_history = []
+    cost_history = []
+    iter_history = []
+    iteration = 0
+
+def record(x):
+    global param_history
+    global cost_history
+    global iter_history
+    param_history.append(x)
+    cost_history.append(cost(x))
+    iter_history.append(iteration)
+
+def record_database(job: Job, is_bq_import: bool, gcp_project_id: str) -> None:
+    client = DBClient("data/job_results.sqlite3")
+    insert_job(client, job)
+    if is_bq_import:
+        bqClient = BigQueryClient(gcp_project_id)
+        insert_job_result(bqClient, job)
+ 
 def init_ansatz(n_qubits: int, depth: int, gate_type: str, noise: dict):
     if gate_type == "direct":
         ...
@@ -37,22 +61,6 @@ def cost(n_qubits, ansatz, observable, params):
     circuit = ansatz.create_ansatz(params)
     circuit.update_quantum_state(state)
     return observable.get_expectation_value(state)
-
-def record(x):
-    global param_history
-    global cost_history
-    global iter_history
-    param_history.append(x)
-    cost_history.append(cost(x))
-    iter_history.append(iteration)
-
-def record_database(job: Job, is_bq_import: bool, gcp_project_id: str) -> None:
-    client = DBClient("data/job_results.sqlite3")
-    insert_job(client, job)
-    if is_bq_import:
-        bqClient = BigQueryClient(gcp_project_id)
-        insert_job_result(bqClient, job)
- 
 
 def run(config):
     ## performance measurement
@@ -82,23 +90,11 @@ def run(config):
     end_time = time.perf_counter()
 
     print(cost_history)
-    ## record to database
-    # job = JobFactory(config).create(
-        # now, start_time, end_time, cost_history, param_history, iter_history
-    # )
-    # record_database(job, config["gcp"]["bigquery"]["import"], config["gcp"]["project"]["id"])
-
-
-def reset():
-    global param_history
-    global cost_history
-    global iter_history
-    global iteration
-    param_history = []
-    cost_history = []
-    iter_history = []
-    iteration = 0
-
+    # record to database
+    job = JobFactory(config).create(
+        now, start_time, end_time, cost_history, param_history, iter_history
+    )
+    record_database(job, config["gcp"]["bigquery"]["import"], config["gcp"]["project"]["id"])
 
 if __name__ == "__main__":
     args = sys.argv
