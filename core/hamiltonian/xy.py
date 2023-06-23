@@ -2,7 +2,7 @@ from functools import cached_property
 from typing import Tuple
 import numpy as np
 from core.circuit import PauliGate
-from . import HamiltonianProtocol, HamiltonianModel, Coefficients
+from .hamiltonian import HamiltonianModel, HamiltonianProtocol, Coefficients
 
 
 class XYHamiltonian(HamiltonianProtocol):
@@ -49,8 +49,8 @@ class XYHamiltonian(HamiltonianProtocol):
                     else:
                         hamiX = np.kron(hamiX, PauliGate.I_gate.value)
                         hamiY = np.kron(hamiY, PauliGate.I_gate.value)
-            XX = XX + 0.5 * self.coef[0][k] * (1 + self.gamma) * hamiX
-            YY = YY + 0.5 * self.coef[0][k] * (1 - self.gamma) * hamiY
+            XX = XX + self.coef[0][k] * (1 + self.gamma) * hamiX
+            YY = YY + self.coef[0][k] * (1 - self.gamma) * hamiY
 
         for m in range(self.n_qubits):
             for n in range(self.n_qubits):
