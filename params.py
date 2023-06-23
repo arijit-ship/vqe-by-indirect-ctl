@@ -25,7 +25,7 @@ def create_init_params(config):
     theta: 0 - 1
     Return [t1, t2, ... td, cn1, cn2, ... cnd, r1, r2, ..., rd, bn1, bn2, ..., bnd, theta1, ... theatad*gate_set]
     """
-    n_qubits = config["nqubit"]
+    n_qubits = config["n_qubits"]
     if config["gate"]["type"] == "direct":
         list_count = 2 * n_qubits * (config["depth"] + 1)
         return _generate_random_theta_params(list_count), None
@@ -56,11 +56,11 @@ def create_init_params(config):
     return init_params, None
 
 
-def create_bounds(nqubit, config):
+def create_bounds(n_qubits, config):
     t_min = np.array([config["gate"]["time"]["min_val"]] * (config["depth"]+1))
     t_max = np.array([config["gate"]["time"]["max_val"]] * (config["depth"]+1))
-    bn_min = np.array([0.0] * config["depth"] * nqubit)
-    bn_max = np.array([1.0] * config["depth"] * nqubit)
+    bn_min = np.array([0.0] * config["depth"] * n_qubits)
+    bn_max = np.array([1.0] * config["depth"] * n_qubits)
     theta_min = np.array(
         [-np.Inf] * (config["gate"]["parametric_rotation_gate_set"] * config["depth"])
     )

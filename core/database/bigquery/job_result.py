@@ -16,7 +16,7 @@ def create_job_result_table(client: BigQueryClient) -> None:
         bigquery.SchemaField("id", "STRING", mode="REQUIRED"),
         bigquery.SchemaField("creation_time", "DATETIME"),
         bigquery.SchemaField("execution_second", "FLOAT64"),
-        bigquery.SchemaField("nqubit", "INTEGER"),
+        bigquery.SchemaField("n_qubits", "INTEGER"),
         bigquery.SchemaField("depth", "INTEGER"),
         bigquery.SchemaField("gate_type", "STRING"),
         bigquery.SchemaField("gate_set", "STRING"),
@@ -86,7 +86,7 @@ def _convert_queryjob_into_dict(jobs: Any) -> Sequence[dict[str, Any]]:
         row = {}
         row["creation_time"] = job["creation_time"]
         row["execution_second"] = job["execution_second"]
-        row["nqubit"] = job["nqubit"]
+        row["n_qubits"] = job["n_qubits"]
         row["depth"] = job["depth"]
         row["gate_type"] = job["gate_type"]
         row["gate_set"] = job["gate_set"]

@@ -4,7 +4,7 @@ def sql_for_create_table() -> str:
       id char(36) PRIMARY KEY,
       creation_time TIMESTAMP,
       execution_second INTEGER,
-      nqubit INTEGER,
+      n_qubits INTEGER,
       depth INTEGER,
       gate_type TEXT,
       gate_set TEXT,

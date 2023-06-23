@@ -9,7 +9,7 @@ class Job:
     id: str
     creation_time: datetime
     execution_second: int
-    nqubit: int
+    n_qubits: int
     depth: int
     gate_type: str
     gate_set: str
@@ -93,7 +93,7 @@ class JobFactory:
             str(uuid.uuid4()),
             current_time,
             end_time - start_time,
-            self.config["nqubit"],
+            self.config["n_qubits"],
             self.config["depth"],
             self.config["gate"]["type"],
             None,
@@ -136,7 +136,7 @@ class JobFactory:
             str(uuid.uuid4()),
             current_time,
             end_time - start_time,
-            self.config["nqubit"],
+            self.config["n_qubits"],
             self.config["depth"],
             self.config["gate"]["type"],
             str(self.config["gate"]["parametric_rotation_gate_set"]),

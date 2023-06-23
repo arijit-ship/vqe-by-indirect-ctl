@@ -23,7 +23,7 @@ def insert_job(client: DBClient, job: Job):
             job.id,
             job.creation_time,
             job.execution_second,
-            job.nqubit,
+            job.n_qubits,
             job.depth,
             job.gate_type,
             job.gate_set,

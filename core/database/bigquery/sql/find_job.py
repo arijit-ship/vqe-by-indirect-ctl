@@ -4,7 +4,7 @@ def sql_for_find_job(project_id: str, dataset: str) -> str:
             id,
             creation_time,
             execution_second,
-            nqubit,
+            n_qubits,
             depth,
             gate_type,
             gate_set,

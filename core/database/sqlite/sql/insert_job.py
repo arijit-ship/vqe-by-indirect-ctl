@@ -4,7 +4,7 @@ def sql_for_insert_job() -> str:
         id,
         creation_time,
         execution_second,
-        nqubit,
+        n_qubits,
         depth,
         gate_type,
         gate_set,
