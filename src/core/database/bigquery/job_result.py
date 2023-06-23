@@ -50,10 +50,10 @@ def create_job_result_table(client: BigQueryClient) -> None:
 
 
 def insert_job_result(client: BigQueryClient, job: Job) -> None:
-    row = vars(job)  ## convert dict type
+    row = vars(job)  # convert dict type
     row["creation_time"] = row["creation_time"].strftime(
         "%Y-%m-%d %H:%M:%S"
-    )  ## convert to str from datetime
+    )  # convert to str from datetime
     errors = client.insert_rows(DATASET, TABLE, [row])
     if errors == []:
         print("New rows have been added.")
