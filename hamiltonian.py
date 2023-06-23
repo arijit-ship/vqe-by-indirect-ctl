@@ -3,17 +3,10 @@ from qulacs.observable import create_observable_from_openfermion_text
 
 
 def create_ising_hamiltonian(nqubit):
-    return create_observable_from_openfermion_text(str(create_qubit_operator(nqubit)))
-    # transverse_Ising_hamiltonian = Observable(nqubit)
-    # J = 1.0
-    # h = 1.0
-    # for i in range(nqubit):
-    #     transverse_Ising_hamiltonian.add_operator(J, f"Z {i} Z {(i+1)%nqubit}")
-    #     transverse_Ising_hamiltonian.add_operator(h, f"X {i}")
-    # return transverse_Ising_hamiltonian
+    return create_observable_from_openfermion_text(str(_create_qubit_operator(nqubit)))
 
 
-def create_qubit_operator(nqubit):
+def _create_qubit_operator(nqubit):
     hami = QubitOperator()
     for i in range(nqubit):
         hami = hami + QubitOperator("X" + str(i))

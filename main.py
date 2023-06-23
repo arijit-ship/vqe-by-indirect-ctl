@@ -19,9 +19,14 @@ param_history = []
 cost_history = []
 iter_history = []
 
-def init_ansatz(n_qubits: int, depth: int, coef: Tuple[Iterable[float], Iterable[float]], noise: dict):
-    hamiltonian = XYHamiltonian(n_qubits, coef, gamma=0)
-    ansatz = XYAnsatz(n_qubits, depth, noise, hamiltonian)
+def init_ansatz(n_qubits: int, depth: int, gate_type: str, noise: dict):
+    if gate_type == "direct":
+        ...
+        # ansatz = HardwareEfficientAnsatz(n_qubits, depth, noise)
+    elif gate_type == "indirect_xy":
+        coef = ([0.5] * n_qubits, [1.0] * n_qubits)
+        hamiltonian = XYHamiltonian(n_qubits, coef, gamma=0)
+        ansatz = XYAnsatz(n_qubits, depth, noise, hamiltonian)
     return ansatz
 
 def cost(nqubit, ansatz, observable, params):
@@ -59,7 +64,7 @@ def run(config):
     observable = create_ising_hamiltonian(n_qubits)
 
     ## init ansatz instance
-    ansatz = init_ansatz(config)
+    ansatz = init_ansatz(n_qubits, config["depth"], config["gate"]["type"], config["gate"]["noise"])
 
     ## randomize and create constraints
     init_params, _ = create_init_params(n_qubits, config)
@@ -71,17 +76,29 @@ def run(config):
     ## calculation
     options = {"maxiter": 1000}
     opt = minimize(
-        cost_fn, init_params, method=config["optimize"]["method"], options=options, callback=record
+        cost_fn, init_params, method=config["optimizer"]["method"], options=options, callback=record
     )
 
     end_time = time.perf_counter()
 
+    print(cost_history)
     ## record to database
-    job = JobFactory(config).create(
-        now, start_time, end_time, cost_history, param_history, iter_history
-    )
-    record_database(job, config["gcp"]["bigquery"]["import"], config["gcp"]["project"]["id"])
-    # output(param_history, cost_history, iter_history)
+    # job = JobFactory(config).create(
+        # now, start_time, end_time, cost_history, param_history, iter_history
+    # )
+    # record_database(job, config["gcp"]["bigquery"]["import"], config["gcp"]["project"]["id"])
+
+
+def reset():
+    global param_history
+    global cost_history
+    global iter_history
+    global iteration
+    param_history = []
+    cost_history = []
+    iter_history = []
+    iteration = 0
+
 
 if __name__ == "__main__":
     args = sys.argv
@@ -90,3 +107,4 @@ if __name__ == "__main__":
         config = yaml.safe_load(f)
         for k in range(config["iter"]):
             run(config)
+            reset()
