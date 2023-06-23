@@ -35,28 +35,28 @@ class XYHamiltonian(HamiltonianProtocol):
         XX = np.array(np.zeros(2**self.n_qubits))
         YY = np.array(np.zeros(2**self.n_qubits))
         Zn = np.array(np.zeros(2**self.n_qubits))
-        for k in range(self.n_qubits - 1):
-            for l in range(self.n_qubits):
-                if k == l:
-                    if l == 0:
+        for j in range(self.n_qubits - 1):
+            for k in range(self.n_qubits):
+                if j == k:
+                    if k == 0:
                         hamiX = PauliGate.X_gate.value
                         hamiY = PauliGate.Y_gate.value
                     else:
                         hamiX = np.kron(hamiX, PauliGate.X_gate.value)
                         hamiY = np.kron(hamiY, PauliGate.Y_gate.value)
 
-                elif k + 1 == l:
+                elif j + 1 == k:
                     hamiX = np.kron(hamiX, PauliGate.X_gate.value)
                     hamiY = np.kron(hamiY, PauliGate.Y_gate.value)
                 else:
-                    if l == 0:
+                    if k == 0:
                         hamiX = PauliGate.I_gate.value
                         hamiY = PauliGate.I_gate.value
                     else:
                         hamiX = np.kron(hamiX, PauliGate.I_gate.value)
                         hamiY = np.kron(hamiY, PauliGate.I_gate.value)
-            XX = XX + self.coef[0][k] * (1 + self.gamma) * hamiX
-            YY = YY + self.coef[0][k] * (1 - self.gamma) * hamiY
+            XX = XX + self.coef[0][j] * (1 + self.gamma) * hamiX
+            YY = YY + self.coef[0][j] * (1 - self.gamma) * hamiY
 
         for m in range(self.n_qubits):
             for n in range(self.n_qubits):

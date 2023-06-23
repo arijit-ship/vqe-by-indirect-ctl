@@ -32,7 +32,7 @@ def create_init_params(config):
         list_count = 2 * n_qubits * (config["depth"] + 1)
         return _generate_random_theta_params(list_count), None
 
-    ## init time
+    # init time
     init_params = np.array([])
     if config["gate"]["time"]["type"] == "random":
         init_params = _generate_random_time_params(
@@ -41,20 +41,20 @@ def create_init_params(config):
             config["depth"] + 1,
         )
 
-    ## append bn params if bn type is random
+    # append bn params if bn type is random
     if config["gate"]["bn"]["type"] == "random":
         init_params = np.append(
             init_params,
             _generate_random_bn_params(-1.0, 1.0, config["depth"] * n_qubits),
         )
 
-    ## append theta params
+    # append theta params
     (init_theta_params,) = _generate_random_theta_params(
         config["gate"]["parametric_rotation_gate_set"] * config["depth"]
     )
     init_params = np.append(init_params, init_theta_params)
 
-    ## set bounds
+    # set bounds
     if config["gate"]["bounds"]:
         return init_params, create_bounds(n_qubits, config)
 

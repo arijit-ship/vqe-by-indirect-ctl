@@ -28,22 +28,22 @@ class IsingHamiltonian(HamiltonianProtocol):
     def create_hamiltonian(self, coef: Coefficients) -> np.ndarray:
         XX = np.array(np.zeros(2**self.n_qubits))
         Y = np.array(np.zeros(2**self.n_qubits))
-        for k in range(self.n_qubits - 1):
-            for l in range(self.n_qubits):
-                if k == l:
-                    if l == 0:
+        for j in range(self.n_qubits - 1):
+            for k in range(self.n_qubits):
+                if j == k:
+                    if k == 0:
                         hamiX = PauliGate.X_gate.value
                     else:
                         hamiX = np.kron(hamiX, PauliGate.X_gate.value)
 
-                elif k + 1 == l:
+                elif j + 1 == k:
                     hamiX = np.kron(hamiX, PauliGate.X_gate.value)
                 else:
-                    if l == 0:
+                    if k == 0:
                         hamiX = PauliGate.I_gate.value
                     else:
                         hamiX = np.kron(hamiX, PauliGate.I_gate.value)
-            XX = XX + coef[0][k] * hamiX
+            XX = XX + coef[0][j] * hamiX
 
         for m in range(self.n_qubits):
             for n in range(self.n_qubits):
