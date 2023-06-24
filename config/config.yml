@@ -4,7 +4,7 @@ iter: 1
 optimizer:
   method: "SLSQP"
 gate:
-  type: "indirect_xy"
+  type: "direct"
   parametric_rotation_gate_set: 4
   constraints: True
   bounds: False

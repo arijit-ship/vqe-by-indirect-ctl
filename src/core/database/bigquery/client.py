@@ -12,7 +12,7 @@ class BigQueryClient:
 
     def generate_table_id(
         self, project_id: str, dataset: str, table: str
-    ) -> bigquery.Table.table_id:
+    ) -> bigquery.Table:
         return bigquery.Table.from_string(f"{project_id}.{dataset}.{table}")
 
     def create_table(self, dataset: str, table: str, schema: str) -> bigquery.Table:

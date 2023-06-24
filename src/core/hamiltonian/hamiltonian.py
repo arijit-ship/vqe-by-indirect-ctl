@@ -1,6 +1,6 @@
 from abc import abstractproperty
 from enum import Enum
-from typing import Iterable, Protocol, Tuple, Union
+from typing import Iterable, Protocol, Union
 
 import numpy as np
 from typing_extensions import TypeAlias
@@ -17,7 +17,7 @@ class HamiltonianModel(Enum):
 # you can select Iterable[float, float].
 # First float is coefficient of X_j,  Second one is coefficient of Z_j Z_k.
 Coefficients: TypeAlias = Union[
-    Iterable[float], Tuple[Iterable[float], Iterable[float]]
+    Iterable[float], tuple[Iterable[float], Iterable[float]]
 ]
 
 
@@ -31,5 +31,5 @@ class HamiltonianProtocol(Protocol):
         ...
 
     @abstractproperty
-    def eigh(self) -> Tuple[np.ndarray, np.ndarray]:
+    def eigh(self) -> tuple[np.ndarray, np.ndarray]:
         ...

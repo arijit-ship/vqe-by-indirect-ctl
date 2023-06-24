@@ -1,10 +1,10 @@
-from core.hamiltonian.hamiltonian import (
+from .hamiltonian import (
     Coefficients,
     HamiltonianModel,
     HamiltonianProtocol,
 )
-from core.hamiltonian.ising import IsingHamiltonian
-from core.hamiltonian.xy import XYHamiltonian
+from .ising import IsingHamiltonian
+from .xy import XYHamiltonian
 
 __all__ = [
     "HamiltonianProtocol",

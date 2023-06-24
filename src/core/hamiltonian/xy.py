@@ -1,5 +1,4 @@
 from functools import cached_property
-from typing import Tuple
 
 import numpy as np
 
@@ -28,7 +27,7 @@ class XYHamiltonian(HamiltonianProtocol):
         return self.create_hamiltonian()
 
     @cached_property
-    def eigh(self) -> Tuple:
+    def eigh(self) -> tuple[np.ndarray, np.ndarray]:
         return np.linalg.eigh(self.value)
 
     def create_hamiltonian(self) -> np.ndarray:

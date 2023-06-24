@@ -35,9 +35,9 @@ class XYAnsatz(AnsatzWithTimeEvolutionGate):
         self._gate_set = gate_set
         single, two = 0, 0
         if noise["singlequbit"]["enabled"]:
-            single: NoiseValue = noise["singlequbit"]["value"]
+            single = noise["singlequbit"]["value"]
         if noise["twoqubit"]["enabled"]:
-            two: NoiseValue = noise["twoqubit"]["value"]
+            two = noise["twoqubit"]["value"]
         self.noise = Noise(single, two)
         self._hamiltonian = hamiltonian
 

@@ -80,12 +80,12 @@ class JobFactory:
         return Job(
             str(uuid.uuid4()),
             current_time,
-            end_time - start_time,
+            int(end_time - start_time),
             self.config["n_qubits"],
             self.config["depth"],
             self.config["gate"]["type"],
-            None,
-            None,
+            "",
+            "",
             str(cost_history[-1]),
             str(param_history[-1]),
             str(iter_history[-1]),
@@ -107,14 +107,14 @@ class JobFactory:
         return Job(
             str(uuid.uuid4()),
             current_time,
-            end_time - start_time,
+            int(end_time - start_time),
             self.config["n_qubits"],
             self.config["depth"],
             self.config["gate"]["type"],
             str(self.config["gate"]["bn"]["value"]),
             str(self.config["gate"]["time"]["value"])
             if "value" in self.config["gate"]["time"]
-            else None,
+            else "",
             str(cost_history[-1]),
             str(param_history[-1]),
             str(iter_history[-1]),

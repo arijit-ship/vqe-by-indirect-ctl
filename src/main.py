@@ -1,5 +1,5 @@
+import argparse
 import datetime
-import sys
 import time
 
 import yaml
@@ -9,9 +9,9 @@ from scipy.optimize import minimize
 from core.ansatz import XYAnsatz
 from core.database.bigquery import BigQueryClient, insert_job_result
 from core.database.schema import Job, JobFactory
-from core.database.sqlite import DBClient, insert_job
+from core.database.sqlite import DBClient, create_job_table, insert_job
 from core.hamiltonian import XYHamiltonian
-from hamiltonian import create_ising_hamiltonian
+from observable import create_ising_hamiltonian
 from params import create_init_params
 
 iteration = 0
@@ -123,9 +123,15 @@ def run(config):
 
 
 if __name__ == "__main__":
-    args = sys.argv
-    path = args[1]
-    with open(path, "r") as f:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=str, required=False)
+    parser.add_argument("--init", type=bool, required=False)
+    args = parser.parse_args()
+    if args.init:
+        client = DBClient("data/job_results.sqlite3")
+        create_job_table(client)
+        exit(0)
+    with open(args.config, "r") as f:
         config = yaml.safe_load(f)
         for k in range(config["iter"]):
             run(config)

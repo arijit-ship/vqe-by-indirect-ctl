@@ -7,7 +7,7 @@ def _generate_random_time_params(min_time, max_time, num) -> np.ndarray:
 
 
 def _generate_random_bn_params(
-    min_bn: float = -1.0, max_bn: float = 1.0, num: int = None
+    min_bn: float = -1.0, max_bn: float = 1.0, num: int = 1
 ) -> np.ndarray:
     return np.random.uniform(min_bn, max_bn, num)
 

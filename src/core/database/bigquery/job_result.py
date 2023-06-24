@@ -1,6 +1,6 @@
 import json
 from collections.abc import Sequence
-from typing import Any
+from typing import Any, Union
 
 from google.cloud import bigquery
 
@@ -61,7 +61,7 @@ def insert_job_result(client: BigQueryClient, job: Job) -> None:
 
 
 def find_job_result(
-    client: BigQueryClient, filter: str = None
+    client: BigQueryClient, filter: Union[str, None] = None
 ) -> Sequence[dict[str, Any]]:
     """Find job results of vqe expectation.
 
