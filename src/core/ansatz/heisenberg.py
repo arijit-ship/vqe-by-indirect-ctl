@@ -1,10 +1,5 @@
 from qulacs import QuantumCircuit
-from qulacs.gate import (
-    RY,
-    RZ,
-    DepolarizingNoise,
-    merge,
-)
+from qulacs.gate import RY, RZ, DepolarizingNoise, merge
 
 from ..circuit import Noise
 from ..hamiltonian import HeisenbergHamiltonian
