@@ -8,9 +8,8 @@ from qulacs.gate import (
     merge,
 )
 
-from ..circuit import Noise, NoiseValue
+from ..circuit import Noise
 from ..hamiltonian import XYHamiltonian
-
 from . import AnsatzType, AnsatzWithTimeEvolutionGate
 
 

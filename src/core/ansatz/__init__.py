@@ -1,6 +1,6 @@
 from .ansatz import AnsatzProtocol, AnsatzType, AnsatzWithTimeEvolutionGate
-from .xy import XYAnsatz
 from .heisenberg import HeisenbergAnsatz
+from .xy import XYAnsatz
 
 __all__ = [
     "AnsatzType",

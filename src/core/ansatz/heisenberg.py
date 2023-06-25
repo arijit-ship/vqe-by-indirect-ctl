@@ -1,16 +1,13 @@
 from qulacs import QuantumCircuit
 from qulacs.gate import (
-    CNOT,
     RY,
     RZ,
     DepolarizingNoise,
-    TwoQubitDepolarizingNoise,
     merge,
 )
 
-from ..circuit import Noise, NoiseValue
+from ..circuit import Noise
 from ..hamiltonian import HeisenbergHamiltonian
-
 from . import AnsatzType, AnsatzWithTimeEvolutionGate
 
 
@@ -55,25 +52,47 @@ class HeisenbergAnsatz(AnsatzWithTimeEvolutionGate):
 
         So we don't adopt ParametricQuantumCircuit, but QuantumCircuit.
         """
-        circuit = QuantumCircuit(self.n_qubits)
+        circuit = QuantumCircuit(self.nqubit)
         for d in range(self.depth):
-            circuit.add_gate(CNOT(0, 1))
-            if self.noise.two != 0:
-                circuit.add_gate(TwoQubitDepolarizingNoise(0, 1, self.noise.two))
-
-            circuit = self._add_parametric_rotation_gate(
-                circuit,
-                params[
-                    self.depth
-                    + 1
-                    + (self._gate_set * d) : self.depth
-                    + 1
-                    + (self._gate_set * d)
-                    + 4
-                ],
-            )
-
-            circuit.add_gate(self.create_time_evolution_gate(params[d], params[d + 1]))
+            if self.bn["type"] == "random":
+                circuit.add_gate(
+                    RZ(
+                        0,
+                        params[
+                            self.depth
+                            + (self.depth * self.nqubit)
+                            + (self.gate_set * d)
+                        ],
+                    )
+                )
+                circuit.add_gate(
+                    RZ(
+                        1,
+                        params[
+                            self.depth
+                            + (self.depth * self.nqubit)
+                            + (self.gate_set * d)
+                            + 1
+                        ],
+                    )
+                )
+                circuit.add_gate(
+                    self.create_hamiltonian_gate(
+                        params[d + self.depth : d + self.depth + self.nqubit],
+                        params[d],
+                    )
+                )
+            elif self.bn["type"] == "static" or self.bn["type"] == "static_random":
+                if self.time["type"] == "random":
+                    circuit.add_gate(RZ(0, params[self.depth + (self._gate_set * d)]))
+                    circuit.add_gate(
+                        RZ(1, params[self.depth + (self._gate_set * d) + 1])
+                    )
+                    circuit.add_gate(self.create_hamiltonian_gate(params[d]))
+                else:
+                    circuit.add_gate(RZ(0, params[(self._gate_set * d)]))
+                    circuit.add_gate(RZ(1, params[(self._gate_set * d) + 1]))
+                    circuit.add_gate(self.create_hamiltonian_gate(self.time["min_val"]))
 
         return circuit
 

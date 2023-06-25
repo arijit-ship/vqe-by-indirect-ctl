@@ -3,7 +3,6 @@ from functools import cached_property
 import numpy as np
 
 from ..circuit import PauliGate
-
 from .hamiltonian import Coefficients, HamiltonianModel, HamiltonianProtocol
 
 
@@ -54,7 +53,7 @@ class XYHamiltonian(HamiltonianProtocol):
                     else:
                         hamiX = np.kron(hamiX, PauliGate.I_gate.value)
                         hamiY = np.kron(hamiY, PauliGate.I_gate.value)
-            
+
             if not isinstance(self.coef, tuple):
                 raise ValueError("coefficient must be tuple.")
             XX = XX + self.coef[0][j] * (1 + self.gamma) * hamiX

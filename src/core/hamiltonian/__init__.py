@@ -1,11 +1,7 @@
-from .hamiltonian import (
-    Coefficients,
-    HamiltonianModel,
-    HamiltonianProtocol,
-)
+from .hamiltonian import Coefficients, HamiltonianModel, HamiltonianProtocol
+from .heisenberg import HeisenbergHamiltonian
 from .ising import IsingHamiltonian
 from .xy import XYHamiltonian
-from .heisenberg import HeisenbergHamiltonian
 
 __all__ = [
     "HamiltonianProtocol",

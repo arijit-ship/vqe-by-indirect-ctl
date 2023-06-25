@@ -3,7 +3,6 @@ from functools import cached_property
 import numpy as np
 
 from ..circuit import PauliGate
-
 from .hamiltonian import Coefficients, HamiltonianModel, HamiltonianProtocol
 
 
@@ -59,8 +58,8 @@ class HeisenbergHamiltonian(HamiltonianProtocol):
                         hamiZ = np.kron(hamiZ, PauliGate.I_gate.value)
             if not isinstance(self.coef, list):
                 raise ValueError("coefficient must be list[float].")
-            XX = XX + cn[k] * hamiX
-            YY = YY + cn[k] * hamiY
-            ZZ = ZZ + cn[k] * hamiZ
+            XX = XX + self.coef[k] * hamiX
+            YY = YY + self.coef[k] * hamiY
+            ZZ = ZZ + self.coef[k] * hamiZ
 
         return XX + YY + ZZ
