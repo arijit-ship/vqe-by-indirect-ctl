@@ -5,6 +5,7 @@ from .hamiltonian import (
 )
 from .ising import IsingHamiltonian
 from .xy import XYHamiltonian
+from .heisenberg import HeisenbergHamiltonian
 
 __all__ = [
     "HamiltonianProtocol",
@@ -12,4 +13,5 @@ __all__ = [
     "Coefficients",
     "IsingHamiltonian",
     "XYHamiltonian",
+    "HeisenbergHamiltonian",
 ]

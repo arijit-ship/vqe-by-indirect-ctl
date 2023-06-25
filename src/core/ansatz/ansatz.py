@@ -14,7 +14,7 @@ class AnsatzType(Enum):
     DIRECT = 1
     INDIRECT_ISING = 2
     INDIRECT_XY = 3
-    INDIRECT_XYZ = 4
+    INDIRECT_HEISENBERG = 4
 
 
 class AnsatzProtocol(Protocol):
