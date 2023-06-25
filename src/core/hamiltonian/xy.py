@@ -37,8 +37,8 @@ class XYHamiltonian(HamiltonianProtocol):
             for k in range(self.n_qubits):
                 if j == k:
                     if k == 0:
-                        hamiX = PauliGate.X_gate.value
-                        hamiY = PauliGate.Y_gate.value
+                        hamiX = np.array(PauliGate.X_gate.value)
+                        hamiY = np.array(PauliGate.Y_gate.value)
                     else:
                         hamiX = np.kron(hamiX, PauliGate.X_gate.value)
                         hamiY = np.kron(hamiY, PauliGate.Y_gate.value)
@@ -48,8 +48,8 @@ class XYHamiltonian(HamiltonianProtocol):
                     hamiY = np.kron(hamiY, PauliGate.Y_gate.value)
                 else:
                     if k == 0:
-                        hamiX = PauliGate.I_gate.value
-                        hamiY = PauliGate.I_gate.value
+                        hamiX = np.array(PauliGate.I_gate.value)
+                        hamiY = np.array(PauliGate.I_gate.value)
                     else:
                         hamiX = np.kron(hamiX, PauliGate.I_gate.value)
                         hamiY = np.kron(hamiY, PauliGate.I_gate.value)
@@ -63,13 +63,13 @@ class XYHamiltonian(HamiltonianProtocol):
             for n in range(self.n_qubits):
                 if m == n:
                     if n == 0:
-                        hamiZ = PauliGate.Z_gate.value
+                        hamiZ = np.array(PauliGate.Z_gate.value)
                     else:
                         hamiZ = np.kron(hamiZ, PauliGate.Z_gate.value)
 
                 else:
                     if n == 0:
-                        hamiZ = PauliGate.I_gate.value
+                        hamiZ = np.array(PauliGate.I_gate.value)
                     else:
                         hamiZ = np.kron(hamiZ, PauliGate.I_gate.value)
 

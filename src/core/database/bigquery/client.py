@@ -19,7 +19,7 @@ class BigQueryClient:
         self, dataset: str, table: str, schema: list[bigquery.SchemaField]
     ) -> bigquery.Table:
         table_id = bigquery.Table.from_string(f"{self.project_id}.{dataset}.{table}")
-        table = bigquery.Table(table_id, schema=schema)
+        table = bigquery.Table(table_id, schema=schema) # type: ignore
         return self.client.create_table(table)
 
     def insert_rows(

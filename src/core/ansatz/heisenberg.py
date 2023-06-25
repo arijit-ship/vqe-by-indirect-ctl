@@ -47,47 +47,13 @@ class HeisenbergAnsatz(AnsatzWithTimeEvolutionGate):
 
         So we don't adopt ParametricQuantumCircuit, but QuantumCircuit.
         """
-        circuit = QuantumCircuit(self.nqubit)
+        circuit = QuantumCircuit(self.n_qubits)
         for d in range(self.depth):
-            if self.bn["type"] == "random":
-                circuit.add_gate(
-                    RZ(
-                        0,
-                        params[
-                            self.depth
-                            + (self.depth * self.nqubit)
-                            + (self.gate_set * d)
-                        ],
-                    )
-                )
-                circuit.add_gate(
-                    RZ(
-                        1,
-                        params[
-                            self.depth
-                            + (self.depth * self.nqubit)
-                            + (self.gate_set * d)
-                            + 1
-                        ],
-                    )
-                )
-                circuit.add_gate(
-                    self.create_hamiltonian_gate(
-                        params[d + self.depth : d + self.depth + self.nqubit],
-                        params[d],
-                    )
-                )
-            elif self.bn["type"] == "static" or self.bn["type"] == "static_random":
-                if self.time["type"] == "random":
-                    circuit.add_gate(RZ(0, params[self.depth + (self._gate_set * d)]))
-                    circuit.add_gate(
-                        RZ(1, params[self.depth + (self._gate_set * d) + 1])
-                    )
-                    circuit.add_gate(self.create_hamiltonian_gate(params[d]))
-                else:
-                    circuit.add_gate(RZ(0, params[(self._gate_set * d)]))
-                    circuit.add_gate(RZ(1, params[(self._gate_set * d) + 1]))
-                    circuit.add_gate(self.create_hamiltonian_gate(self.time["min_val"]))
+            circuit.add_gate(RZ(0, params[self.depth + 1 + (self._gate_set * d)]))
+            circuit.add_gate(
+                RZ(1, params[self.depth + 1 + (self._gate_set * d) + 1])
+            )
+            circuit.add_gate(self.create_time_evolution_gate(params[d], params[d+1]))
 
         return circuit
 

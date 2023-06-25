@@ -28,6 +28,8 @@ class HeisenbergHamiltonian(HamiltonianProtocol):
         return np.linalg.eigh(self.value)
 
     def create_hamiltonian(self) -> np.ndarray:
+        if not isinstance(self.coef, list):
+            raise ValueError("coefficient must be list[float].")
         XX = np.array(np.zeros(2**self.n_qubits))
         YY = np.array(np.zeros(2**self.n_qubits))
         ZZ = np.array(np.zeros(2**self.n_qubits))
@@ -35,9 +37,9 @@ class HeisenbergHamiltonian(HamiltonianProtocol):
             for k in range(self.n_qubits):
                 if j == k:
                     if k == 0:
-                        hamiX = PauliGate.X_gate.value
-                        hamiY = PauliGate.Y_gate.value
-                        hamiZ = PauliGate.Z_gate.value
+                        hamiX = np.array(PauliGate.X_gate.value)
+                        hamiY = np.array(PauliGate.Y_gate.value)
+                        hamiZ = np.array(PauliGate.Z_gate.value)
                     else:
                         hamiX = np.kron(hamiX, PauliGate.X_gate.value)
                         hamiY = np.kron(hamiY, PauliGate.Y_gate.value)
@@ -49,15 +51,14 @@ class HeisenbergHamiltonian(HamiltonianProtocol):
                     hamiZ = np.kron(hamiZ, PauliGate.Z_gate.value)
                 else:
                     if k == 0:
-                        hamiX = PauliGate.I_gate.value
-                        hamiY = PauliGate.I_gate.value
-                        hamiZ = PauliGate.I_gate.value
+                        hamiX = np.array(PauliGate.I_gate.value)
+                        hamiY = np.array(PauliGate.I_gate.value)
+                        hamiZ = np.array(PauliGate.I_gate.value)
                     else:
                         hamiX = np.kron(hamiX, PauliGate.I_gate.value)
                         hamiY = np.kron(hamiY, PauliGate.I_gate.value)
                         hamiZ = np.kron(hamiZ, PauliGate.I_gate.value)
-            if not isinstance(self.coef, list):
-                raise ValueError("coefficient must be list[float].")
+
             XX = XX + self.coef[j] * hamiX
             YY = YY + self.coef[j] * hamiY
             ZZ = ZZ + self.coef[j] * hamiZ

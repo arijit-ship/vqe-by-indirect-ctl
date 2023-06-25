@@ -25,17 +25,19 @@ class IsingHamiltonian(HamiltonianProtocol):
         return self.create_hamiltonian(self.coef)
 
     @cached_property
-    def eigh(self) -> Tuple:
+    def eigh(self) -> tuple[np.ndarray, np.ndarray]:
         return np.linalg.eigh(self.value)
 
     def create_hamiltonian(self, coef: Coefficients) -> np.ndarray:
+        if not isinstance(coef, tuple):
+                raise ValueError("coef must be tuple")
         XX = np.array(np.zeros(2**self.n_qubits))
         Y = np.array(np.zeros(2**self.n_qubits))
         for j in range(self.n_qubits - 1):
             for k in range(self.n_qubits):
                 if j == k:
                     if k == 0:
-                        hamiX = PauliGate.X_gate.value
+                        hamiX = np.array(PauliGate.X_gate.value)
                     else:
                         hamiX = np.kron(hamiX, PauliGate.X_gate.value)
 
@@ -43,7 +45,7 @@ class IsingHamiltonian(HamiltonianProtocol):
                     hamiX = np.kron(hamiX, PauliGate.X_gate.value)
                 else:
                     if k == 0:
-                        hamiX = PauliGate.I_gate.value
+                        hamiX = np.array(PauliGate.I_gate.value)
                     else:
                         hamiX = np.kron(hamiX, PauliGate.I_gate.value)
             XX = XX + coef[0][j] * hamiX
@@ -52,13 +54,13 @@ class IsingHamiltonian(HamiltonianProtocol):
             for n in range(self.n_qubits):
                 if m == n:
                     if n == 0:
-                        hamiY = PauliGate.Y_gate.value
+                        hamiY = np.array(PauliGate.Y_gate.value)
                     else:
                         hamiY = np.kron(hamiY, PauliGate.Y_gate.value)
 
                 else:
                     if n == 0:
-                        hamiY = PauliGate.I_gate.value
+                        hamiY = np.array(PauliGate.I_gate.value)
                     else:
                         hamiY = np.kron(hamiY, PauliGate.I_gate.value)
 
