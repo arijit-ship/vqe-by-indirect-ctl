@@ -1,14 +1,12 @@
 from qulacs import QuantumCircuit
-from qulacs.gate import (
-    RZ,
-)
+from qulacs.gate import RZ
 
 from ..circuit import Noise
 from ..hamiltonian import IsingHamiltonian
 from . import AnsatzType, AnsatzWithTimeEvolutionGate
 
 
-class XYAnsatz(AnsatzWithTimeEvolutionGate):
+class IsingAnsatz(AnsatzWithTimeEvolutionGate):
     n_qubits: int
     depth: int
     noise: Noise
@@ -37,7 +35,7 @@ class XYAnsatz(AnsatzWithTimeEvolutionGate):
 
     @property
     def ansatz_type(self) -> AnsatzType:
-        return AnsatzType.INDIRECT_XY
+        return AnsatzType.INDIRECT_ISING
 
     @property
     def parametric_circuit(self) -> QuantumCircuit:
@@ -51,12 +49,8 @@ class XYAnsatz(AnsatzWithTimeEvolutionGate):
         """
         circuit = QuantumCircuit(self.n_qubits)
         for d in range(self.depth):
-                circuit.add_gate(
-                    RZ(0, params[self.depth + 1 + (self._gate_set * d)])
-                )
-                circuit.add_gate(
-                    RZ(1, params[self.depth + 1 + (self._gate_set * d) + 1])
-                )
-                circuit.add_gate(self.create_time_evolution_gate(params[d], params[d+1]))
+            circuit.add_gate(RZ(0, params[self.depth + 1 + (self._gate_set * d)]))
+            circuit.add_gate(RZ(1, params[self.depth + 1 + (self._gate_set * d) + 1]))
+            circuit.add_gate(self.create_time_evolution_gate(params[d], params[d + 1]))
 
         return circuit

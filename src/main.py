@@ -6,11 +6,11 @@ import yaml
 from qulacs import QuantumCircuit, QuantumState
 from scipy.optimize import minimize
 
-from .core.ansatz import XYAnsatz
+from .core.ansatz import AnsatzProtocol, HeisenbergAnsatz, IsingAnsatz, XYAnsatz
 from .core.database.bigquery import BigQueryClient, insert_job_result
 from .core.database.schema import Job, JobFactory
 from .core.database.sqlite import DBClient, create_job_table, insert_job
-from .core.hamiltonian import XYHamiltonian
+from .core.hamiltonian import HeisenbergHamiltonian, IsingHamiltonian, XYHamiltonian
 from .observable import create_ising_hamiltonian
 from .params import create_init_params
 
@@ -31,14 +31,25 @@ def reset():
     iteration = 0
 
 
-def init_ansatz(n_qubits: int, depth: int, gate_type: str, gate_set: int, noise: dict):
+def init_ansatz(
+    n_qubits: int, depth: int, gate_type: str, gate_set: int, noise: dict
+) -> AnsatzProtocol:
+    ansatz: AnsatzProtocol
     if gate_type == "direct":
         ...
         # ansatz = HardwareEfficientAnsatz(n_qubits, depth, noise)
     elif gate_type == "indirect_xy":
-        coef = ([0.5] * n_qubits, [1.0] * n_qubits)
-        hamiltonian = XYHamiltonian(n_qubits, coef, gamma=0)
-        ansatz = XYAnsatz(n_qubits, depth, gate_set, noise, hamiltonian)
+        xy_coef = ([0.5] * n_qubits, [1.0] * n_qubits)
+        xy_hami = XYHamiltonian(n_qubits, xy_coef, gamma=0)
+        ansatz = XYAnsatz(n_qubits, depth, gate_set, noise, xy_hami)
+    elif gate_type == "indirect_ising":
+        ising_coef = ([0.5] * n_qubits, [1.0] * n_qubits)
+        ising_hami = IsingHamiltonian(n_qubits, ising_coef)
+        ansatz = IsingAnsatz(n_qubits, depth, gate_set, noise, ising_hami)
+    elif gate_type == "indirect_heisenberg":
+        heisenberg_coef = [1.0] * n_qubits
+        heisenberg_hami = HeisenbergHamiltonian(n_qubits, heisenberg_coef)
+        ansatz = HeisenbergAnsatz(n_qubits, depth, gate_set, noise, heisenberg_hami)
     return ansatz
 
 

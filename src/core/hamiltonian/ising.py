@@ -29,7 +29,7 @@ class IsingHamiltonian(HamiltonianProtocol):
 
     def create_hamiltonian(self, coef: Coefficients) -> np.ndarray:
         if not isinstance(coef, tuple):
-                raise ValueError("coef must be tuple")
+            raise ValueError("coef must be tuple")
         XX = np.array(np.zeros(2**self.n_qubits))
         Y = np.array(np.zeros(2**self.n_qubits))
         for j in range(self.n_qubits - 1):

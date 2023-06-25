@@ -50,10 +50,8 @@ class HeisenbergAnsatz(AnsatzWithTimeEvolutionGate):
         circuit = QuantumCircuit(self.n_qubits)
         for d in range(self.depth):
             circuit.add_gate(RZ(0, params[self.depth + 1 + (self._gate_set * d)]))
-            circuit.add_gate(
-                RZ(1, params[self.depth + 1 + (self._gate_set * d) + 1])
-            )
-            circuit.add_gate(self.create_time_evolution_gate(params[d], params[d+1]))
+            circuit.add_gate(RZ(1, params[self.depth + 1 + (self._gate_set * d) + 1]))
+            circuit.add_gate(self.create_time_evolution_gate(params[d], params[d + 1]))
 
         return circuit
 
