@@ -30,6 +30,8 @@ class XYHamiltonian(HamiltonianProtocol):
         return np.linalg.eigh(self.value)
 
     def create_hamiltonian(self) -> np.ndarray:
+        if not isinstance(self.coef, tuple):
+            raise ValueError("coefficient must be tuple.")
         XX = np.array(np.zeros(2**self.n_qubits))
         YY = np.array(np.zeros(2**self.n_qubits))
         Zn = np.array(np.zeros(2**self.n_qubits))
@@ -54,8 +56,6 @@ class XYHamiltonian(HamiltonianProtocol):
                         hamiX = np.kron(hamiX, PauliGate.I_gate.value)
                         hamiY = np.kron(hamiY, PauliGate.I_gate.value)
 
-            if not isinstance(self.coef, tuple):
-                raise ValueError("coefficient must be tuple.")
             XX = XX + self.coef[0][j] * (1 + self.gamma) * hamiX
             YY = YY + self.coef[0][j] * (1 - self.gamma) * hamiY
 
@@ -73,8 +73,6 @@ class XYHamiltonian(HamiltonianProtocol):
                     else:
                         hamiZ = np.kron(hamiZ, PauliGate.I_gate.value)
 
-            if not isinstance(self.coef, tuple):
-                raise ValueError("coefficient must be tuple.")
             Zn = Zn + self.coef[1][m] * hamiZ
 
         return XX + YY + Zn
