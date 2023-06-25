@@ -15,7 +15,7 @@ class BigQueryClient:
     ) -> bigquery.Table:
         return bigquery.Table.from_string(f"{project_id}.{dataset}.{table}")
 
-    def create_table(self, dataset: str, table: str, schema: str) -> bigquery.Table:
+    def create_table(self, dataset: str, table: str, schema: list[bigquery.SchemaField]) -> bigquery.Table:
         table_id = bigquery.Table.from_string(f"{self.project_id}.{dataset}.{table}")
         table = bigquery.Table(table_id, schema=schema)
         return self.client.create_table(table)

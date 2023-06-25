@@ -4,9 +4,9 @@ from typing import Any, Union
 
 from google.cloud import bigquery
 
-from core.database.bigquery import BigQueryClient
-from core.database.bigquery.sql.find_job import sql_for_find_job
-from core.database.schema.job import Job
+from . import BigQueryClient
+from .sql import sql_for_find_job
+from ..schema.job import Job
 
 DATASET = "vqe"
 TABLE = "job_result"

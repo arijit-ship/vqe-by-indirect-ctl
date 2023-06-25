@@ -3,8 +3,8 @@ from typing import Tuple
 
 import numpy as np
 
-from core.circuit import PauliGate
-from core.hamiltonian.hamiltonian import (
+from ..circuit import PauliGate
+from ..hamiltonian.hamiltonian import (
     Coefficients,
     HamiltonianModel,
     HamiltonianProtocol,

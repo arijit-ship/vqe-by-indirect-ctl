@@ -1,8 +1,7 @@
-from core.database.schema.job import Job
+from ..schema.job import Job
 
 from .client import DBClient
-from .sql.create_table_job import sql_for_create_table
-from .sql.insert_job import sql_for_insert_job
+from .sql import sql_for_create_table, sql_for_insert_job
 
 
 def create_job_table(client: DBClient, force: bool = False) -> None:

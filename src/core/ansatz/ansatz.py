@@ -3,11 +3,11 @@ from enum import Enum
 from typing import Protocol
 
 import numpy as np
-from qulacs import QuantumCircuit
+from qulacs import QuantumCircuit, QuantumGateMatrix
 from qulacs.gate import DenseMatrix
 
-from core.circuit import Noise
-from core.hamiltonian import HamiltonianProtocol
+from ..circuit import Noise
+from ..hamiltonian import HamiltonianProtocol
 
 
 class AnsatzType(Enum):
@@ -39,7 +39,7 @@ class AnsatzProtocol(Protocol):
 class AnsatzWithTimeEvolutionGate(AnsatzProtocol):
     _hamiltonian: HamiltonianProtocol
 
-    def create_time_evolution_gate(self, t_after, t_before) -> DenseMatrix:
+    def create_time_evolution_gate(self, t_after, t_before) -> QuantumGateMatrix:
         diag, eigen_vecs = self._hamiltonian.eigh
         time_evol_op = np.dot(
             np.dot(eigen_vecs, np.diag(np.exp(-1j * (t_after - t_before) * diag))),
