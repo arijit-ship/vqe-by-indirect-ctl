@@ -2,7 +2,7 @@ import numpy as np
 from scipy.optimize import LinearConstraint
 
 
-def create_time_constraints(time_params_length, all_params_length):
+def create_time_constraints(time_params_length, all_params_length) -> LinearConstraint:
     """Create constraints for time params. As parameter list includes params of
     theta, we have to create constraints of the same length.
 
