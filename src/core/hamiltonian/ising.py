@@ -21,7 +21,7 @@ class IsingHamiltonian(HamiltonianProtocol):
 
     @cached_property
     def value(self) -> np.ndarray:
-        return self.create_hamiltonian(self.coef)
+        return self.create_hamiltonian()
 
     @cached_property
     def eigh(self) -> tuple[np.ndarray, np.ndarray]:
