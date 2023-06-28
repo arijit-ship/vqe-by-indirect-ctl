@@ -3,9 +3,7 @@ from qulacs.observable import create_observable_from_openfermion_text
 
 
 def create_ising_hamiltonian(n_qubits):
-    return create_observable_from_openfermion_text(
-        str(_create_qubit_operator(n_qubits))
-    )
+    return create_observable_from_openfermion_text(str(_create_qubit_operator(n_qubits)))
 
 
 def _create_qubit_operator(n_qubits):

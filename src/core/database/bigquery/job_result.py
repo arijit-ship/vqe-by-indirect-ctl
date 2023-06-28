@@ -43,9 +43,7 @@ def create_job_result_table(client: BigQueryClient) -> None:
         bigquery.SchemaField("config", "STRING"),
     ]
     table = client.create_table(DATASET, TABLE, schema)
-    print(
-        "Created table {}.{}.{}".format(table.project, table.dataset_id, table.table_id)
-    )
+    print("Created table {}.{}.{}".format(table.project, table.dataset_id, table.table_id))
 
 
 def insert_job_result(client: BigQueryClient, job: Job) -> None:

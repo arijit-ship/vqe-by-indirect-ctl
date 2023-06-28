@@ -78,12 +78,8 @@ def create_bounds(n_qubits, config):
     )
 
     if config["gate"]["bn"]["type"] == "random":
-        min_bounds = np.append(
-            np.append(np.append(np.array([]), t_min), bn_min), theta_min
-        )
-        max_bounds = np.append(
-            np.append(np.append(np.array([]), t_max), bn_max), theta_max
-        )
+        min_bounds = np.append(np.append(np.append(np.array([]), t_min), bn_min), theta_min)
+        max_bounds = np.append(np.append(np.append(np.array([]), t_max), bn_max), theta_max)
     else:
         min_bounds = np.append(np.append(np.array([]), t_min), theta_min)
         max_bounds = np.append(np.append(np.array([]), t_max), theta_max)

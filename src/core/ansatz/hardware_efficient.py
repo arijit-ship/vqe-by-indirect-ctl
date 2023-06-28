@@ -73,9 +73,7 @@ class HardwareEfficientAnsatz(AnsatzProtocol):
             )
         )
         if self.noise["singlequbit"]["enabled"]:
-            circuit.add_gate(
-                DepolarizingNoise(target_qubit, self.noise["singlequbit"]["value"])
-            )
+            circuit.add_gate(DepolarizingNoise(target_qubit, self.noise["singlequbit"]["value"]))
         return circuit
 
     def add_cz_gate(self, circuit, control_qubit, target_qubit):
