@@ -137,7 +137,7 @@ def run(config):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, required=False)
+    parser.add_argument("--config", type=str, required=True)
     parser.add_argument("--init", type=bool, required=False)
     args = parser.parse_args()
     with open(args.config, "r") as f:
