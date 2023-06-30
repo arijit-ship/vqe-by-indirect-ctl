@@ -8,11 +8,8 @@ from ..schema.job import Job
 from . import BigQueryClient
 from .sql import sql_for_find_job
 
-DATASET = "vqe"
-TABLE = "job_result"
 
-
-def create_job_result_table(client: BigQueryClient) -> None:
+def create_job_result_table(client: BigQueryClient, dataset: str, table_name: str) -> None:
     schema = [
         bigquery.SchemaField("id", "STRING", mode="REQUIRED"),
         bigquery.SchemaField("creation_time", "DATETIME"),
@@ -20,15 +17,7 @@ def create_job_result_table(client: BigQueryClient) -> None:
         bigquery.SchemaField("n_qubits", "INTEGER"),
         bigquery.SchemaField("depth", "INTEGER"),
         bigquery.SchemaField("gate_type", "STRING"),
-        bigquery.SchemaField("gate_set", "STRING"),
-        bigquery.SchemaField("bn_type", "STRING"),
-        bigquery.SchemaField("bn_range", "INTEGER"),
         bigquery.SchemaField("bn", "STRING"),
-        bigquery.SchemaField("cn", "STRING"),
-        bigquery.SchemaField("r", "STRING"),
-        bigquery.SchemaField("t_type", "STRING"),
-        bigquery.SchemaField("min_time", "STRING"),
-        bigquery.SchemaField("max_time", "STRING"),
         bigquery.SchemaField("t", "STRING"),
         bigquery.SchemaField("cost", "STRING"),
         bigquery.SchemaField("parameter", "STRING"),
@@ -36,22 +25,18 @@ def create_job_result_table(client: BigQueryClient) -> None:
         bigquery.SchemaField("cost_history", "STRING"),
         bigquery.SchemaField("parameter_history", "STRING"),
         bigquery.SchemaField("iteration_history", "STRING"),
-        bigquery.SchemaField("noise_singlequbit_enabled", "BOOL"),
-        bigquery.SchemaField("noise_singlequbit_value", "STRING"),
-        bigquery.SchemaField("noise_twoqubit_enabled", "BOOL"),
-        bigquery.SchemaField("noise_twoqubit_value", "STRING"),
         bigquery.SchemaField("config", "STRING"),
     ]
-    table = client.create_table(DATASET, TABLE, schema)
+    table = client.create_table(dataset, table_name, schema)
     print("Created table {}.{}.{}".format(table.project, table.dataset_id, table.table_id))
 
 
-def insert_job_result(client: BigQueryClient, job: Job) -> None:
+def insert_job_result(client: BigQueryClient, job: Job, dataset: str, table_name: str) -> None:
     row = vars(job)  # convert dict type
     row["creation_time"] = row["creation_time"].strftime(
         "%Y-%m-%d %H:%M:%S"
     )  # convert to str from datetime
-    errors = client.insert_rows(DATASET, TABLE, [row])
+    errors = client.insert_rows(dataset, table_name, [row])
     if errors == []:
         print("New rows have been added.")
     # else:
@@ -59,7 +44,7 @@ def insert_job_result(client: BigQueryClient, job: Job) -> None:
 
 
 def find_job_result(
-    client: BigQueryClient, filter: Union[str, None] = None
+    client: BigQueryClient, filter: Union[str, None] = None, dataset: str = "", table_name: str = "",
 ) -> Sequence[dict[str, Any]]:
     """Find job results of vqe expectation.
 
@@ -69,10 +54,10 @@ def find_job_result(
         filter: sql phrase to filter records. It excludes `filter`.
     """
     if filter is None:
-        jobs = client.client.query(sql_for_find_job(client.project_id, DATASET))
+        jobs = client.client.query(sql_for_find_job(client.project_id, dataset, table_name))
     else:
         jobs = client.client.query(
-            "{} WHERE {}".format(sql_for_find_job(client.project_id, DATASET), filter)
+            "{} WHERE {}".format(sql_for_find_job(client.project_id, dataset, table_name), filter)
         )
 
     return _convert_queryjob_into_dict(jobs)

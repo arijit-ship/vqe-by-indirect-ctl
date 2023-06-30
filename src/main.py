@@ -73,12 +73,12 @@ def record(n_qubits, ansatz, observable, params):
     iter_history.append(iteration)
 
 
-def record_database(job: Job, is_bq_import: bool, gcp_project_id: str) -> None:
+def record_database(job: Job, is_bq_import: bool, gcp_project_id: str, dataset: str, table: str) -> None:
     client = DBClient("data/job_results.sqlite3")
     insert_job(client, job)
     if is_bq_import:
         bqClient = BigQueryClient(gcp_project_id)
-        insert_job_result(bqClient, job)
+        insert_job_result(bqClient, job, dataset, table)
 
 
 def run(config):
@@ -130,6 +130,8 @@ def run(config):
         job,
         config["gcp"]["bigquery"]["import"],
         config["gcp"]["project"]["id"],
+        config["gcp"]["bigquery"]["dataset"],
+        config["gcp"]["bigquery"]["table"],
     )
 
 

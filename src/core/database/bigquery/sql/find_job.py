@@ -1,4 +1,4 @@
-def sql_for_find_job(project_id: str, dataset: str) -> str:
+def sql_for_find_job(project_id: str, dataset: str, table_name: str) -> str:
     return f"""
         SELECT
             id,
@@ -28,5 +28,5 @@ def sql_for_find_job(project_id: str, dataset: str) -> str:
             json_extract(config, "$.gate.bounds") as bounds,
             json_extract(config, "$.gate.time.evol") as t_evol,
             config
-        FROM {project_id}.{dataset}.job_result
+        FROM {project_id}.{dataset}.{table_name}
     """
