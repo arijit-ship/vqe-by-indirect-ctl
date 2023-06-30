@@ -37,3 +37,5 @@ gcp:
     id: "sample-project"
   bigquery:
     import: False
+    dataset: job_results
+    table: vqe
