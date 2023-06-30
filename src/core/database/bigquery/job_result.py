@@ -44,7 +44,10 @@ def insert_job_result(client: BigQueryClient, job: Job, dataset: str, table_name
 
 
 def find_job_result(
-    client: BigQueryClient, filter: Union[str, None] = None, dataset: str = "", table_name: str = "",
+    client: BigQueryClient,
+    filter: Union[str, None] = None,
+    dataset: str = "",
+    table_name: str = "",
 ) -> Sequence[dict[str, Any]]:
     """Find job results of vqe expectation.
 

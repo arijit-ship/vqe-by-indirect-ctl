@@ -7,7 +7,11 @@ from qulacs import QuantumCircuit, QuantumState
 from scipy.optimize import minimize
 
 from core.ansatz import AnsatzProtocol, HeisenbergAnsatz, IsingAnsatz, XYAnsatz
-from core.database.bigquery import BigQueryClient, insert_job_result, create_job_result_table
+from core.database.bigquery import (
+    BigQueryClient,
+    create_job_result_table,
+    insert_job_result,
+)
 from core.database.schema import Job, JobFactory
 from core.database.sqlite import DBClient, create_job_table, insert_job
 from core.hamiltonian import HeisenbergHamiltonian, IsingHamiltonian, XYHamiltonian
@@ -73,7 +77,9 @@ def record(n_qubits, ansatz, observable, params):
     iter_history.append(iteration)
 
 
-def record_database(job: Job, is_bq_import: bool, gcp_project_id: str, dataset: str, table: str) -> None:
+def record_database(
+    job: Job, is_bq_import: bool, gcp_project_id: str, dataset: str, table: str
+) -> None:
     client = DBClient("data/job_results.sqlite3")
     insert_job(client, job)
     if is_bq_import:
@@ -146,8 +152,14 @@ if __name__ == "__main__":
             client = DBClient("data/job_results.sqlite3")
             create_job_table(client)
             if config["gcp"]["bigquery"]["import"]:
-                bq_client = BigQueryClient(config["gcp"]["project"]["id"],)
-                create_job_result_table(bq_client, config["gcp"]["bigquery"]["dataset"], config["gcp"]["bigquery"]["table"])
+                bq_client = BigQueryClient(
+                    config["gcp"]["project"]["id"],
+                )
+                create_job_result_table(
+                    bq_client,
+                    config["gcp"]["bigquery"]["dataset"],
+                    config["gcp"]["bigquery"]["table"],
+                )
         else:
             for k in range(config["iter"]):
                 run(config)
