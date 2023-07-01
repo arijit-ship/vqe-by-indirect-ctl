@@ -18,13 +18,13 @@ poetry install
 #### Initialize
 
 ```
-python src/main.py --config config/xxxx.yml --init True
+poetry run python src/main.py --config config/xxxx.yml --init True
 ```
 
 #### Run
 
 ```
-python src/main.py --config config/xxxx.yml
+poetry run python src/main.py --config config/xxxx.yml
 ```
 
 ### Linting and testing

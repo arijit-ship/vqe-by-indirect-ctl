@@ -1,5 +1,5 @@
 from qulacs import QuantumCircuit
-from qulacs.gate import RY, RZ, DepolarizingNoise, merge
+from qulacs.gate import RX, RY, DepolarizingNoise, merge
 
 from ..circuit import Noise
 from ..hamiltonian import HeisenbergHamiltonian
@@ -49,18 +49,15 @@ class HeisenbergAnsatz(AnsatzWithTimeEvolutionGate):
         """
         circuit = QuantumCircuit(self.n_qubits)
         for d in range(self.depth):
-            circuit.add_gate(RZ(0, params[self.depth + 1 + (self._gate_set * d)]))
-            circuit.add_gate(RZ(1, params[self.depth + 1 + (self._gate_set * d) + 1]))
+            circuit.add_gate(
+                merge(
+                    RX(0, params[self.depth + 1 + (self._gate_set * d)]),
+                    RY(0, params[self.depth + 1 + (self._gate_set * d) + 1]),
+                )
+            )
+            if self.noise.single != 0:
+                circuit.add_gate(DepolarizingNoise(0, self.noise.single))
+
             circuit.add_gate(self.create_time_evolution_gate(params[d], params[d + 1]))
-
-        return circuit
-
-    def _add_parametric_rotation_gate(self, circuit, params) -> QuantumCircuit:
-        circuit.add_gate(merge(RY(0, params[0]), RZ(0, params[1])))
-        circuit.add_gate(merge(RY(1, params[2]), RZ(1, params[3])))
-
-        if self.noise.single != 0:
-            circuit.add_gate(DepolarizingNoise(0, self.noise.single))
-            circuit.add_gate(DepolarizingNoise(1, self.noise.single))
 
         return circuit
