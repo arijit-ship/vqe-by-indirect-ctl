@@ -11,7 +11,6 @@ class HeisenbergAnsatz(AnsatzWithTimeEvolutionGate):
     depth: int
     noise: Noise
     _gate_set: int
-    _parametric_circuit: QuantumCircuit
     _hamiltonian: HeisenbergHamiltonian
 
     def __init__(
@@ -36,10 +35,6 @@ class HeisenbergAnsatz(AnsatzWithTimeEvolutionGate):
     @property
     def ansatz_type(self) -> AnsatzType:
         return AnsatzType.INDIRECT_HEISENBERG
-
-    @property
-    def parametric_circuit(self) -> QuantumCircuit:
-        return self._parametric_circuit
 
     def create_ansatz(self, params: list) -> QuantumCircuit:
         """Create ansatz circuit When we create the time evolution gates, we

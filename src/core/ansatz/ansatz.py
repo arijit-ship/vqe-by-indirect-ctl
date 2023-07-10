@@ -15,20 +15,16 @@ class AnsatzType(Enum):
     INDIRECT_ISING = 2
     INDIRECT_XY = 3
     INDIRECT_HEISENBERG = 4
+    CUSTOM = 5
 
 
 class AnsatzProtocol(Protocol):
     n_qubits: int
     depth: int
     noise: Noise
-    _parametric_circuit: QuantumCircuit
 
     @abstractproperty
     def ansatz_type(self) -> AnsatzType:
-        ...
-
-    @abstractproperty
-    def parametric_circuit(self) -> QuantumCircuit:
         ...
 
     @abstractmethod

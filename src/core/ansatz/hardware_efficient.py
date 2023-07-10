@@ -13,7 +13,6 @@ class HardwareEfficientAnsatz(AnsatzProtocol):
     depth: int
     noise: Noise
     _gate_set: int
-    _parametric_circuit: QuantumCircuit
 
     def __init__(self, n_qubits: int, depth: int, noise: dict) -> None:
         self.n_qubits = n_qubits
@@ -28,10 +27,6 @@ class HardwareEfficientAnsatz(AnsatzProtocol):
     @property
     def ansatz_type(self) -> AnsatzType:
         return AnsatzType.DIRECT
-
-    @property
-    def parametric_circuit(self) -> QuantumCircuit:
-        return self._parametric_circuit
 
     def create_ansatz(self, params: list) -> QuantumCircuit:
         circuit = QuantumCircuit(self.n_qubits)

@@ -44,10 +44,6 @@ class XYAnsatz(AnsatzWithTimeEvolutionGate):
     def ansatz_type(self) -> AnsatzType:
         return AnsatzType.INDIRECT_XY
 
-    @property
-    def parametric_circuit(self) -> QuantumCircuit:
-        return self._parametric_circuit
-
     def create_ansatz(self, params: list) -> QuantumCircuit:
         """Create ansatz circuit When we create the time evolution gates, we
         need to give the time parameters.
