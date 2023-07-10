@@ -1,4 +1,3 @@
-import numpy as np
 from qulacs import ParametricQuantumCircuit
 
 from core.ansatz.ansatz import AnsatzType
@@ -14,7 +13,9 @@ class HardwareEfficientAnsatz(AnsatzProtocol):
     _gate_set: int
     _parametric_circuit: ParametricQuantumCircuit
 
-    def __init__(self, n_qubits: int, depth: int, noise: dict, circuit: ParametricQuantumCircuit) -> None:
+    def __init__(
+        self, n_qubits: int, depth: int, noise: dict, circuit: ParametricQuantumCircuit
+    ) -> None:
         self.n_qubits = n_qubits
         self.depth = depth
         single, two = 0, 0
@@ -30,6 +31,6 @@ class HardwareEfficientAnsatz(AnsatzProtocol):
         return AnsatzType.CUSTOM
 
     def create_ansatz(self, params: list) -> ParametricQuantumCircuit:
-        for i, param in range(enumerate(params)):
+        for i, param in enumerate(params):
             self._parametric_circuit.set_parameter(i, param)
         return self._parametric_circuit
