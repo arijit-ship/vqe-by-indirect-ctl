@@ -45,9 +45,9 @@ def insert_job_result(client: BigQueryClient, job: Job, dataset: str, table_name
 
 def find_job_result(
     client: BigQueryClient,
+    dataset: str,
+    table_name: str,
     filter: Union[str, None] = None,
-    dataset: str = "",
-    table_name: str = "",
 ) -> Sequence[dict[str, Any]]:
     """Find job results of vqe expectation.
 
@@ -76,12 +76,12 @@ def _convert_queryjob_into_dict(jobs: Any) -> Sequence[dict[str, Any]]:
         row["depth"] = job["depth"]
         row["gate_type"] = job["gate_type"]
         row["gate_set"] = job["gate_set"]
-        row["bn_type"] = job["bn_type"]
+        row["bn_type"] = job["bn_type"].strip("\"")
         row["bn_range"] = job["bn_range"]
         row["bn"] = job["bn"]
         row["cn"] = job["cn"]
         row["r"] = job["r"]
-        row["t_type"] = job["t_type"]
+        row["t_type"] = job["t_type"].strip("\"")
         row["max_time"] = job["max_time"]
         row["min_time"] = job["min_time"]
         row["t"] = job["t"]
@@ -89,12 +89,12 @@ def _convert_queryjob_into_dict(jobs: Any) -> Sequence[dict[str, Any]]:
         row["parameter"] = job["parameter"]
         row["iteration"] = job["iteration"]
         row["noise_singlequbit_enabled"] = job["noise_singlequbit_enabled"]
-        row["noise_singlequbit_value"] = job["noise_singlequbit_value"]
+        row["noise_singlequbit_value"] = job["noise_singlequbit_value"].strip("\"")
         row["noise_twoqubit_enabled"] = job["noise_twoqubit_enabled"]
-        row["noise_twoqubit_value"] = job["noise_twoqubit_value"]
+        row["noise_twoqubit_value"] = job["noise_twoqubit_value"].strip("\"")
         row["constraints"] = job["constraints"]
         row["bounds"] = job["bounds"]
-        row["t_evol"] = job["t_evol"]
+        row["t_evol"] = job["t_evol"].strip("\"")
         row["config"] = json.loads(job["config"])
         rows.append(row)
     return rows
