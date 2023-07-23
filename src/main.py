@@ -116,7 +116,7 @@ def run(config):
         return cost(n_qubits, ansatz, observable, params)
 
     # calculation
-    options = {"maxiter": 1000}
+    options = {"maxiter": 2000}
     _ = minimize(
         cost_fn,
         init_params,
