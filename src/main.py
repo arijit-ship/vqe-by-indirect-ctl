@@ -36,14 +36,14 @@ def reset():
 
 
 def init_ansatz(
-    n_qubits: int, depth: int, gate_type: str, gate_set: int, noise: dict
+    n_qubits: int, depth: int, gate_type: str, gate_set: int, noise: dict, bn_coef: list,
 ) -> AnsatzProtocol:
     ansatz: AnsatzProtocol
     if gate_type == "direct":
         ...
         # ansatz = HardwareEfficientAnsatz(n_qubits, depth, noise)
     elif gate_type == "indirect_xy":
-        xy_coef = ([0.5] * n_qubits, [1.0] * n_qubits)
+        xy_coef = ([0.5] * n_qubits, bn_coef)
         xy_hami = XYHamiltonian(n_qubits, xy_coef, gamma=0)
         ansatz = XYAnsatz(n_qubits, depth, gate_set, noise, xy_hami)
     elif gate_type == "indirect_ising":
@@ -103,6 +103,7 @@ def run(config):
         config["gate"]["type"],
         config["gate"]["parametric_rotation_gate_set"],
         config["gate"]["noise"],
+        config["gate"]["bn"]["value"],
     )
 
     # randomize and create constraints
