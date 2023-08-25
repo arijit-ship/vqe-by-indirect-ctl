@@ -17,6 +17,7 @@ from core.database.sqlite import DBClient, create_job_table, insert_job
 from core.hamiltonian import HeisenbergHamiltonian, IsingHamiltonian, XYHamiltonian
 from observable import create_ising_hamiltonian
 from params import create_init_params
+from constraints import create_time_constraints
 
 iteration = 0
 param_history = []
@@ -108,6 +109,7 @@ def run(config):
 
     # randomize and create constraints
     init_params, _ = create_init_params(config)
+    constraints = create_time_constraints(config["depth"]+1, len(init_params))
     record(n_qubits, ansatz, observable, init_params)
 
     def record_fn(params):
@@ -122,6 +124,7 @@ def run(config):
         cost_fn,
         init_params,
         method=config["optimizer"]["method"],
+        constraints=constraints,
         options=options,
         callback=record_fn,
     )
