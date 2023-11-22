@@ -4,7 +4,7 @@ iter: 1
 optimizer:
   method: "SLSQP"
 gate:
-  type: "direct"
+  type: "indirect_xy"
   parametric_rotation_gate_set: 4
   constraints: True
   bounds: False
@@ -25,13 +25,13 @@ gate:
       max_val: 1
   bn:
     type: "static"
-    value: [0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+    value: [0.0,0.0,0.0,0.0]
   cn:
     type: "static"
-    value: [1.0,1.0,1.0,1.0,1.0,1.0,1.0]
+    value: [1.0,1.0,1.0,1.0]
   r:
     type: "static"
-    value: [0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+    value: [0.0,0.0,0.0,0.0]
 gcp:
   project:
     id: "sample-project"
