@@ -37,7 +37,12 @@ def reset():
 
 
 def init_ansatz(
-    n_qubits: int, depth: int, gate_type: str, gate_set: int, noise: dict, bn_coef: list,
+    n_qubits: int,
+    depth: int,
+    gate_type: str,
+    gate_set: int,
+    noise: dict,
+    bn_coef: list,
 ) -> AnsatzProtocol:
     ansatz: AnsatzProtocol
     if gate_type == "direct":
@@ -109,7 +114,7 @@ def run(config):
 
     # randomize and create constraints
     init_params, _ = create_init_params(config)
-    constraints = create_time_constraints(config["depth"]+1, len(init_params))
+    constraints = create_time_constraints(config["depth"] + 1, len(init_params))
     record(n_qubits, ansatz, observable, init_params)
 
     def record_fn(params):
