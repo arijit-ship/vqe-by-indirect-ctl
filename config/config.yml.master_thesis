@@ -18,11 +18,11 @@ gate:
   time:
     type: "random"
     evol: "absolute"
-    min_val: 10
-    max_val: 0
+    min_val: 0
+    max_val: 10
     init:
-      min_val: -1
-      max_val: 1
+      min_val: 0
+      max_val: 2
   bn:
     type: "static"
     value: [0.0,0.0,0.0,0.0,0.0,0.0,0.0]
