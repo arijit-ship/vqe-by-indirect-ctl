@@ -8,8 +8,8 @@
 | optimizer.method | optimizer([scipy minimize](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html)) |
 | gate.type | "indirect_xy", "indirect_xyz", "indirect_ising" |
 | gate.parametric_rotation_gate_set | 1レイヤー内に存在するパラメトリック量子ゲートの数 |
-| gate.constraints ||
-| gate.bounds ||
+| gate.constraints |パラメータの制約条件([scipy minimize](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html))|
+| gate.bounds |パラメータの上限、下限値([scipy minimize](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html))|
 | gate.noise.singlequbit | ノイズを挿入する割合 [0.0, 1.0] |
 | gate.noise.twoqubit | ノイズを挿入する割合 [0.0, 1.0] |
 | gate.time.type | random: 時間発展ゲートの時刻パラメータ初期値をrandomにとる |
