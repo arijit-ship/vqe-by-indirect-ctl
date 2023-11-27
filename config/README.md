@@ -16,8 +16,8 @@
 | gate.time.evol | "absolute": 時刻パラメータを絶対時刻とする |
 | gate.time.min_val | 時刻の最小値(`gate.bounds`がTrueの時のみ有効) |
 | gate.time.max_val | 時刻の最大値(`gate.bounds`がTrueの時のみ有効) |
-| gate.time.min_val | 時刻パラメータの初期値の最小値 |
-| gate.time.max_val | 時刻パラメータの初期値の最大値 |
+| gate.time.init.min_val | 時刻パラメータの初期値の最小値 |
+| gate.time.init.max_val | 時刻パラメータの初期値の最大値 |
 | gate.bn.type | static: 磁場を固定値とする |
 | gate.bn.value | 磁場の値(`gate.bn.type`が"static"の時のみ有効) |
 | gate.cn.type | static: カップリング定数を固定値とする |
