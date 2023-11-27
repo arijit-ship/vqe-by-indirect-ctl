@@ -40,8 +40,8 @@ def create_init_params(config):
     init_params = np.array([])
     if config["gate"]["time"]["type"] == "random":
         init_params = _generate_random_time_params(
-            config["gate"]["time"]["min_val"],
-            config["gate"]["time"]["max_val"],
+            config["gate"]["time"]["init"]["min_val"],
+            config["gate"]["time"]["init"]["max_val"],
             config["depth"] + 1,
         )
 
